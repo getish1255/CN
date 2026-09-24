@@ -1,0 +1,6 @@
+{
+  "name": "OARI Research Concept Note Review Dashboard",
+  "description": "Executive decision dashboard for Oromia Agricultural Research Institute concept note reviews, directorate performance, center benchmarks, and 1,734 research proposals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
