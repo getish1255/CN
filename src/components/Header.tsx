@@ -46,9 +46,16 @@ export const Header: React.FC<HeaderProps> = ({
             }}
             className="flex items-center gap-2.5 hover:opacity-90 transition-opacity"
           >
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-600 via-teal-500 to-blue-600 flex items-center justify-center text-white shadow-md shadow-emerald-600/20 font-bold text-sm">
-              <Microscope className="w-4 h-4 text-white" />
-            </span>
+            <img
+              src="https://iqqo.gov.et/sites/default/files/logo200.jpg"
+              alt="OARI / IQQO Logo"
+              className="w-9 h-9 rounded-lg object-contain bg-white p-0.5 border border-slate-700/80 shadow-md shadow-black/30 shrink-0"
+              onError={(e) => {
+                // In case of network restriction, gracefully hide or keep placeholder
+                const target = e.currentTarget;
+                target.style.display = 'none';
+              }}
+            />
             <div className="leading-tight">
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-bold tracking-tight text-white">OARI ReviewHQ</span>

@@ -72,18 +72,25 @@ export const ExecutiveOverview: React.FC<ExecutiveOverviewProps> = ({
       {/* Official Executive Header */}
       <div className="p-6 rounded-xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/40 border border-slate-800 shadow-md">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/50 px-2.5 py-1 rounded-md mb-2">
-              <span>OROMIA AGRICULTURAL RESEARCH INSTITUTE</span>
-              <span>·</span>
-              <span>Official Decision Summary Report</span>
+          <div className="flex items-start gap-4">
+            <img
+              src="https://iqqo.gov.et/sites/default/files/logo200.jpg"
+              alt="OARI / IQQO Logo"
+              className="w-14 h-14 rounded-xl object-contain bg-white p-1 border border-slate-700/80 shadow-md shadow-black/40 shrink-0 mt-0.5 hidden sm:block"
+            />
+            <div>
+              <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/50 px-2.5 py-1 rounded-md mb-2">
+                <span>OROMIA AGRICULTURAL RESEARCH INSTITUTE (IQQO)</span>
+                <span>·</span>
+                <span>Official Decision Summary Report</span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                Research Concept Note Review & Evaluation Console
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+                Decision Summary Report for the September 04–17, 2026 review cycle. A total of <strong>1,734 concept notes</strong> were evaluated across 9 research directorates, 20 research centers, and 32 specialized commodity disciplines.
+              </p>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-              Research Concept Note Review & Evaluation Console
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
-              Decision Summary Report for the September 04–17, 2026 review cycle. A total of <strong>1,734 concept notes</strong> were evaluated across 9 research directorates, 20 research centers, and 28 specialized commodity disciplines.
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 shrink-0">

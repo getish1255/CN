@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CenterStat, DecisionType, DirectorateStat } from '../types/dashboard';
-import { BookOpen, FileCheck, X } from 'lucide-react';
+import { BookOpen, FileCheck, X, Lock, Eye, EyeOff, ShieldAlert } from 'lucide-react';
 
 interface NewEntryModalProps {
   isOpen: boolean;
@@ -32,12 +32,28 @@ export const NewEntryModal: React.FC<NewEntryModalProps> = ({
   const [selectedTeam, setSelectedTeam] = useState('Cereals');
   const [conceptDecision, setConceptDecision] = useState<DecisionType>('Accepted');
   const [reviewerComments, setReviewerComments] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setPassword('');
+      setPasswordError('');
+      setShowPassword(false);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleConceptSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!conceptTitle.trim() || !researcherName.trim()) return;
+
+    if (password !== 'boqolo') {
+      setPasswordError("Authorization failed: Incorrect password. (Default is 'boqolo')");
+      return;
+    }
 
     onSubmitConceptNote({
       title: conceptTitle,
@@ -62,12 +78,21 @@ export const NewEntryModal: React.FC<NewEntryModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Modal Header */}
-        <div className="flex items-center gap-2 text-xs font-mono text-blue-400 mb-1">
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>OARI Review Panel Intake</span>
+        {/* Modal Header with Official Logo */}
+        <div className="flex items-center gap-3 mb-3">
+          <img
+            src="https://iqqo.gov.et/sites/default/files/logo200.jpg"
+            alt="OARI / IQQO Logo"
+            className="w-10 h-10 rounded-lg object-contain bg-white p-0.5 border border-slate-700/80 shadow-md shrink-0"
+          />
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-blue-400">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>OARI Review Panel Intake</span>
+            </div>
+            <h2 className="text-lg font-bold text-white leading-tight">Record New Concept Note Proposal</h2>
+          </div>
         </div>
-        <h2 className="text-lg font-bold text-white mb-1">Record New Concept Note Proposal</h2>
         <p className="text-xs text-slate-400 mb-4">
           Register an official concept note into the 2020 EC review database with technical directives and panel decision.
         </p>
@@ -183,6 +208,52 @@ export const NewEntryModal: React.FC<NewEntryModalProps> = ({
             />
           </div>
 
+          {/* Authorization Password Field */}
+          <div className="p-3.5 rounded-lg bg-slate-950/80 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-1.5 text-slate-200 font-medium">
+                <Lock className="w-3.5 h-3.5 text-amber-400" />
+                <span>Authorization Password <span className="text-rose-400">*</span></span>
+              </label>
+              <span className="text-[10px] font-mono text-slate-400">
+                Default: <code className="text-amber-300 bg-amber-950/60 px-1 py-0.5 rounded border border-amber-800/40">boqolo</code>
+              </span>
+            </div>
+
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Enter password (default: boqolo)"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (passwordError) setPasswordError('');
+                }}
+                className={`w-full pl-3 pr-10 py-2 bg-slate-900 border rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none text-xs font-mono ${
+                  passwordError
+                    ? 'border-rose-500 focus:border-rose-400'
+                    : 'border-slate-700 focus:border-blue-500'
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
+                title={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+
+            {passwordError && (
+              <div className="flex items-center gap-1.5 text-[11px] text-rose-400 font-medium">
+                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
+                <span>{passwordError}</span>
+              </div>
+            )}
+          </div>
+
           <div className="pt-3 border-t border-slate-800 flex justify-end gap-2">
             <button
               type="button"
@@ -193,9 +264,10 @@ export const NewEntryModal: React.FC<NewEntryModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium shadow-sm shadow-blue-500/20 transition-all"
+              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium shadow-sm shadow-blue-500/20 transition-all flex items-center gap-1.5"
             >
-              Submit Concept Note
+              <FileCheck className="w-3.5 h-3.5" />
+              <span>Submit Concept Note</span>
             </button>
           </div>
         </form>
