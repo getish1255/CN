@@ -1,4 +1,5 @@
 import { CenterStat, DecisionBreakdown, DirectorateStat, ResearcherStat, TeamStat } from '../types/dashboard';
+import { ALL_CONCEPT_NOTES, calculateTeamStats } from './conceptNotesData';
 
 export const OARI_METRICS = {
   title: 'OROMIA AGRICULTURAL RESEARCH INSTITUTE',
@@ -118,40 +119,7 @@ export const RESEARCHERS_DATA: ResearcherStat[] = [
   { no: 50, name: 'Tolasa Berhanu', center: 'Jimma', directorate: 'A/Enjineering', totalSub: 8, fullyAcc: 1, condAcc: 0, totalApp: 1, accRate: 12.5 }
 ];
 
-export const COMMODITY_TEAMS_DATA: TeamStat[] = [
-  { name: "Pulses", directorate: "Crop", submitted: 195, accepted: 191, acceptedWithMod: 0, condAccepted: 0, rejected: 4, pended: 0, merged: 0, acceptanceRate: 97.9, centersCount: 10 },
-  { name: "Cereals", directorate: "Crop", submitted: 168, accepted: 146, acceptedWithMod: 0, condAccepted: 0, rejected: 21, pended: 1, merged: 0, acceptanceRate: 86.9, centersCount: 10 },
-  { name: "Feeds & Forage", directorate: "Livestock", submitted: 118, accepted: 62, acceptedWithMod: 5, condAccepted: 0, rejected: 51, pended: 0, merged: 0, acceptanceRate: 56.8, centersCount: 10 },
-  { name: "Soil Fertility Improvement (SFI)", directorate: "Natural Resource", submitted: 113, accepted: 45, acceptedWithMod: 0, condAccepted: 20, rejected: 47, pended: 1, merged: 0, acceptanceRate: 57.5, centersCount: 12 },
-  { name: "Agricultural Economics", directorate: "SEAE", submitted: 94, accepted: 56, acceptedWithMod: 0, condAccepted: 19, rejected: 19, pended: 0, merged: 0, acceptanceRate: 79.8, centersCount: 16 },
-  { name: "Agroforestry (AF)", directorate: "Natural Resource", submitted: 93, accepted: 62, acceptedWithMod: 0, condAccepted: 1, rejected: 29, pended: 1, merged: 0, acceptanceRate: 67.7, centersCount: 10 },
-  { name: "Plant Pathology", directorate: "Protection", submitted: 92, accepted: 68, acceptedWithMod: 0, condAccepted: 0, rejected: 21, pended: 3, merged: 0, acceptanceRate: 73.9, centersCount: 10 },
-  { name: "Apiculture (Bee)", directorate: "Livestock", submitted: 91, accepted: 56, acceptedWithMod: 4, condAccepted: 1, rejected: 30, pended: 0, merged: 0, acceptanceRate: 67, centersCount: 10 },
-  { name: "Horticulture", directorate: "Crop", submitted: 89, accepted: 89, acceptedWithMod: 0, condAccepted: 0, rejected: 0, pended: 0, merged: 0, acceptanceRate: 100, centersCount: 9 },
-  { name: "Socio-Economics", directorate: "SEAE", submitted: 89, accepted: 71, acceptedWithMod: 0, condAccepted: 4, rejected: 14, pended: 0, merged: 0, acceptanceRate: 84.3, centersCount: 16 },
-  { name: "Irrigation & Drainage (IDWH)", directorate: "A/Engineering", submitted: 87, accepted: 48, acceptedWithMod: 0, condAccepted: 8, rejected: 31, pended: 0, merged: 0, acceptanceRate: 64.4, centersCount: 12 },
-  { name: "Meat Animals", directorate: "Livestock", submitted: 52, accepted: 13, acceptedWithMod: 11, condAccepted: 0, rejected: 28, pended: 0, merged: 0, acceptanceRate: 46.2, centersCount: 3 },
-  { name: "Post-Harvest & Processing (PHAPP)", directorate: "A/Engineering", submitted: 46, accepted: 7, acceptedWithMod: 0, condAccepted: 2, rejected: 37, pended: 0, merged: 0, acceptanceRate: 19.6, centersCount: 5 },
-  { name: "Agricultural Entomology", directorate: "Protection", submitted: 43, accepted: 29, acceptedWithMod: 0, condAccepted: 0, rejected: 14, pended: 0, merged: 0, acceptanceRate: 67.4, centersCount: 8 },
-  { name: "Agri-Machinery & Farm Power (AMFP)", directorate: "A/Engineering", submitted: 42, accepted: 2, acceptedWithMod: 0, condAccepted: 17, rejected: 23, pended: 0, merged: 0, acceptanceRate: 45.2, centersCount: 4 },
-  { name: "Renewable Energy (Renergy)", directorate: "A/Engineering", submitted: 39, accepted: 32, acceptedWithMod: 0, condAccepted: 0, rejected: 7, pended: 0, merged: 0, acceptanceRate: 82.1, centersCount: 4 },
-  { name: "Soil & Water Conservation (SWC)", directorate: "Natural Resource", submitted: 39, accepted: 31, acceptedWithMod: 0, condAccepted: 0, rejected: 8, pended: 0, merged: 0, acceptanceRate: 79.5, centersCount: 8 },
-  { name: "Coffee & Tea Improvement", directorate: "Coffee and Tea", submitted: 34, accepted: 8, acceptedWithMod: 4, condAccepted: 3, rejected: 17, pended: 2, merged: 0, acceptanceRate: 44.1, centersCount: 6 },
-  { name: "Dairy Technology", directorate: "Livestock", submitted: 31, accepted: 7, acceptedWithMod: 1, condAccepted: 1, rejected: 21, pended: 1, merged: 0, acceptanceRate: 29, centersCount: 3 },
-  { name: "Plant Biotechnology", directorate: "Biotechnology", submitted: 26, accepted: 7, acceptedWithMod: 0, condAccepted: 0, rejected: 9, pended: 10, merged: 0, acceptanceRate: 26.9, centersCount: 2 },
-  { name: "Poultry Science", directorate: "Livestock", submitted: 24, accepted: 9, acceptedWithMod: 8, condAccepted: 0, rejected: 7, pended: 0, merged: 0, acceptanceRate: 70.8, centersCount: 2 },
-  { name: "Weed Science", directorate: "Protection", submitted: 23, accepted: 21, acceptedWithMod: 0, condAccepted: 0, rejected: 2, pended: 0, merged: 0, acceptanceRate: 91.3, centersCount: 8 },
-  { name: "Soil Resource Survey (SRS)", directorate: "Natural Resource", submitted: 23, accepted: 17, acceptedWithMod: 0, condAccepted: 4, rejected: 2, pended: 0, merged: 0, acceptanceRate: 91.3, centersCount: 4 },
-  { name: "Coffee & Tea Management", directorate: "Coffee and Tea", submitted: 21, accepted: 12, acceptedWithMod: 0, condAccepted: 4, rejected: 5, pended: 0, merged: 0, acceptanceRate: 76.2, centersCount: 5 },
-  { name: "Food Chemistry & Nutrition", directorate: "Food Science", submitted: 18, accepted: 11, acceptedWithMod: 0, condAccepted: 0, rejected: 4, pended: 3, merged: 0, acceptanceRate: 61.1, centersCount: 1 },
-  { name: "Capture Fisheries", directorate: "Livestock", submitted: 14, accepted: 14, acceptedWithMod: 0, condAccepted: 0, rejected: 0, pended: 0, merged: 0, acceptanceRate: 100, centersCount: 1 },
-  { name: "Aquaculture", directorate: "Livestock", submitted: 10, accepted: 7, acceptedWithMod: 0, condAccepted: 0, rejected: 3, pended: 0, merged: 0, acceptanceRate: 70, centersCount: 1 },
-  { name: "Food Technology & Processing", directorate: "Food Science", submitted: 7, accepted: 7, acceptedWithMod: 0, condAccepted: 0, rejected: 0, pended: 0, merged: 0, acceptanceRate: 100, centersCount: 1 },
-  { name: "Soil Microbial Biotechnology", directorate: "Biotechnology", submitted: 4, accepted: 0, acceptedWithMod: 0, condAccepted: 0, rejected: 2, pended: 2, merged: 0, acceptanceRate: 0, centersCount: 1 },
-  { name: "Food Microbiology", directorate: "Food Science", submitted: 4, accepted: 4, acceptedWithMod: 0, condAccepted: 0, rejected: 0, pended: 0, merged: 0, acceptanceRate: 100, centersCount: 1 },
-  { name: "Coffee & Tea Management & Protection", directorate: "Coffee and Tea", submitted: 4, accepted: 3, acceptedWithMod: 0, condAccepted: 0, rejected: 1, pended: 0, merged: 0, acceptanceRate: 75, centersCount: 2 },
-  { name: "Coffee & Tea Quality", directorate: "Coffee and Tea", submitted: 1, accepted: 1, acceptedWithMod: 0, condAccepted: 0, rejected: 0, pended: 0, merged: 0, acceptanceRate: 100, centersCount: 1 },
-];
+export const COMMODITY_TEAMS_DATA: TeamStat[] = calculateTeamStats(ALL_CONCEPT_NOTES);
 
 export const REPORT_HIGHLIGHTS = [
   {

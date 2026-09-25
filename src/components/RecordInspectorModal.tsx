@@ -78,7 +78,21 @@ export const RecordInspectorModal: React.FC<RecordInspectorModalProps> = ({
               </div>
               <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
                 <span className="text-[11px] text-slate-400 block">Evaluation Verdict</span>
-                <span className="text-sm font-semibold text-emerald-400 mt-0.5 block">
+                <span
+                  className={`text-sm font-semibold mt-0.5 block ${
+                    conceptNote.decision === 'Accepted'
+                      ? 'text-emerald-400'
+                      : conceptNote.decision === 'Accepted with modification'
+                      ? 'text-amber-400'
+                      : conceptNote.decision === 'Conditionally Accepted'
+                      ? 'text-blue-400'
+                      : conceptNote.decision === 'Rejected'
+                      ? 'text-rose-400'
+                      : conceptNote.decision === 'Pended'
+                      ? 'text-purple-400'
+                      : 'text-indigo-400'
+                  }`}
+                >
                   {conceptNote.decision}
                 </span>
               </div>
